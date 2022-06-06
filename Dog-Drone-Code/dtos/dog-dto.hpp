@@ -1,4 +1,3 @@
-#pragma once
 
 namespace DogDrone::walk
 {
@@ -8,6 +7,7 @@ namespace DogDrone::walk
     {
         int walk_speed;
         int walk_angle;
+        char mode = 'W';
     };
 
     struct motor_arguments
