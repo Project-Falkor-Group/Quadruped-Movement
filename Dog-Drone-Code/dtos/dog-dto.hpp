@@ -1,8 +1,7 @@
+#pragma once
 
-namespace DogDrone::walk
+namespace DogDrone::Walk
 {
-
-    //DogDrone Movement DTO
     struct movement_commands
     {
         int walk_speed;
@@ -30,25 +29,4 @@ namespace DogDrone::walk
         leg_arguments right_front{leg_arguments{}};
         leg_arguments right_rear{leg_arguments{}};
     };
-
-
-    //DogDrone senor data
-    struct mpu_data
-    {
-        double ax;
-        double ay;
-        double az;
-    };
-
-    struct sensory_commands
-    {
-        int ultrasound_distance_right;
-        int ultrasound_distance_left;
-    };
-
-    struct obstacle_arguments
-    {
-        bool obstacle_detected;
-    };
-
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ground
+namespace DogDrone::Walk    
 {
     class Leg
     {
