@@ -1,8 +1,8 @@
 #pragma once
 #include "../../dtos/dog-dto.hpp"
+#include "inverse-kin.hpp"
 // include <Servo.h>
-#include <math.h>
-#include <cmath>
+
 #include "leg.hpp"
 
 namespace DogDrone::Walk
@@ -16,19 +16,6 @@ namespace DogDrone::Walk
             front_left = front_left_;
             back_right = back_right_;
             back_left = back_left_;
-        };
-
-        struct angles
-        {
-            double theta;
-            double alpha;
-            double gamma;
-        }; ////vector
-        struct coordinates
-        {
-            double x4;
-            double y4;
-            double z4;
         };
 
         quadruped_router_arguments set_quadruped_router_arguments()
@@ -70,10 +57,10 @@ namespace DogDrone::Walk
             angles anglesBR;
             angles anglesBL;
 
-            anglesFR = legFR(coordFR.x4, coordFR.y4, coordFR.z4);
-            anglesFL = legFL(coordFL.x4, coordFL.y4, coordFL.z4);
-            anglesBR = legBR(coordBR.x4, coordBR.y4, coordBR.z4);
-            anglesBL = legBL(coordBL.x4, coordBL.y4, coordBL.z4);
+            anglesFR = InverseKin::legFR(coordFR.x4, coordFR.y4, coordFR.z4);
+            anglesFL = InverseKin::legFL(coordFL.x4, coordFL.y4, coordFL.z4);
+            anglesBR = InverseKin::legBR(coordBR.x4, coordBR.y4, coordBR.z4);
+            anglesBL = InverseKin::legBL(coordBL.x4, coordBL.y4, coordBL.z4);
 
             // Tell the servos to pulse with coresponsing motors in the array with angle
             front_right.hip.pulse = AngleToPulse(anglesFR.theta);
@@ -173,106 +160,7 @@ namespace DogDrone::Walk
         }
 
         // INVERSE KINEMATICS
-        angles legFR(double x4, double y4, double z4)
-        {
-
-            angles ang;
-            double D;
-
-            D = ((x4)^2 + (-y4)^2 - (L1)^2 + (z4)^2 - (L2)^2 - (L3)^2) / (2 * L2 * L3);
-            //  if (D >= 1){D=1;}
-            //  else if (D <= 0){D=0;}
-            /////////////////////////////////////////////DOMINIO
-            ang.theta = -atan2(y4, x4) - atan2(sqrt((x4)^2 + (-y4)^2 - (L1)^2), -L1);
-            ang.gamma = atan2(sqrt(1 - (D)^2), D);
-            ang.alpha = atan2(z4, sqrt((x4)^2 + (-y4)^2 - (L1)^2)) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
-            ang.theta = ang.theta * 360 / (2 * PI) + 270;
-            ang.alpha = -ang.alpha * 360 / (2 * PI);
-            ang.gamma = ang.gamma * 360 / (2 * PI) - 90;
-
-            //  Serial.print("\t");Serial.print(ang.tetta);Serial.print(" - ");Serial.print(ang.alpha);Serial.print(" - ");Serial.println(ang.gamma);
-            if (ang.gamma >= MAX_GAMMA)
-            {
-                ang.gamma = MAX_GAMMA;
-            }
-            return ang;
-        }
-
-        angles legFL(double x4, double y4, double z4)
-        {
-
-            angles ang;
-            double D;
-
-            D = ((x4)^2 + (-y4)^2 - (L1)^2 + (z4)^2 - (L2)^2 - (L3)^2) / (2 * L2 * L3);
-            //  if (D >= 1){D=1;}
-            //  else if (D <= 0){D=0;}
-            /////////////////////////////////////////////DOMINIO
-            ang.theta = -atan2(y4, x4) - atan2(sqrt((x4)^2 + (-y4)^2 - (L1)^2), -L1);
-            ang.gamma = atan2(sqrt(1 - (D)^2), D);
-            ang.alpha = atan2(z4, sqrt((x4)^2 + (-y4)^2 - (L1)^2)) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
-            ang.theta = ang.theta * 360 / (2 * PI) + 270;
-            ang.alpha = -ang.alpha * 360 / (2 * PI);
-            ang.gamma = ang.gamma * 360 / (2 * PI) - 90;
-
-            //  Serial.print("\t");Serial.print(ang.tetta);Serial.print(" - ");Serial.print(ang.alpha);Serial.print(" - ");Serial.println(ang.gamma);
-            if (ang.gamma >= MAX_GAMMA)
-            {
-                ang.gamma = MAX_GAMMA;
-            }
-            return ang;
-        }
-
-        angles legBR(double x4, double y4, double z4)
-        {
-
-            angles ang;
-            double D;
-
-            D = ((x4)^2 + (-y4)^2 - (L1)^2 + (z4)^2 - (L2)^2 - (L3)^2) / (2 * L2 * L3);
-            //  if (D >= 1){D=1;}
-            //  else if (D <= 0){D=0;}
-            /////////////////////////////////////////////DOMINIO
-            ang.theta = -atan2(y4, x4) - atan2(sqrt((x4)^2 + (-y4)^2 - (L1)^2), -L1);
-            ang.gamma = atan2(sqrt(1 - (D)^2), D);
-            ang.alpha = atan2(z4, sqrt((x4)^2 + (-y4)^2 - (L1)^2)) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
-            ang.theta = ang.theta * 360 / (2 * PI) + 270;
-            ang.alpha = -ang.alpha * 360 / (2 * PI);
-            ang.gamma = ang.gamma * 360 / (2 * PI) - 90;
-
-            //  Serial.print("\t");Serial.print(ang.tetta);Serial.print(" - ");Serial.print(ang.alpha);Serial.print(" - ");Serial.println(ang.gamma);
-            if (ang.gamma >= MAX_GAMMA)
-            {
-                ang.gamma = MAX_GAMMA;
-            }
-
-            return ang;
-        }
-
-        angles legBL(double x4, double y4, double z4)
-        {
-
-            angles ang;
-            double D;
-
-            D = ((x4)^2 + (-y4)^2 - (L1)^2 + (z4)^2 - (L2)^2 - (L3)^2) / (2 * L2 * L3);
-            //  if (D >= 1){D=1;}
-            //  else if (D <= 0){D=0;}
-            /////////////////////////////////////////////DOMINIO
-            ang.theta = -atan2(y4, x4) - atan2(sqrt((x4)^2 + (-y4)^2 - (L1)^2), -L1);
-            ang.gamma = atan2(sqrt(1 - (D)^2), D);
-            ang.alpha = atan2(z4, sqrt((x4)^2 + (-y4)^2 - (L1)^2)) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
-            ang.theta = ang.theta * 360 / (2 * PI) + 270;
-            ang.alpha = -ang.alpha * 360 / (2 * PI);
-            ang.gamma = ang.gamma * 360 / (2 * PI) - 90;
-
-            //  Serial.print("\t");Serial.print(ang.tetta);Serial.print(" - ");Serial.print(ang.alpha);Serial.print(" - ");Serial.println(ang.gamma);
-            if (ang.gamma >= MAX_GAMMA)
-            {
-                ang.gamma = MAX_GAMMA;
-            }
-            return ang;
-        }
+ 
 
     private:
         leg_arguments front_right;
@@ -283,13 +171,12 @@ namespace DogDrone::Walk
         // int L1 = 40;
         // int L2 = 100;
         // int L3 = 100;
-        int MAX_GAMMA = 50;
         // int MAX_SERVOS = 12;
         // int MAX_PULSE = 2500;
         // int MIN_PULSE = 560;
-        int L1 = 40;
-        int L2 = 100;
-        int L3 = 100;
+
+        const int MAX_SERVOS = 12;
+
 
         Servo Servos[MAX_SERVOS];
     };

@@ -1,5 +1,6 @@
 #pragma once
 #include "router.hpp"
+#include <Arduino.h>
 //#include <Arduino>
 
 namespace DogDrone::Walk
@@ -8,23 +9,9 @@ namespace DogDrone::Walk
     class Run
     {
 
-        struct coordinates
+        Run(coordinates coordFR, coordinates coordFL, coordinates coordBR, coordinates coordBL) : coordFR_(coordFR), coordFL_(coordFL), coordBR_(coordBR), coordBL_(coordBL)
         {
-            double x4;
-            double y4;
-            double z4;
-        };
-        struct coordinates coord0;
-        struct coordinates step_coord;
-        struct coordinates coordFR;
-        struct coordinates coordFL;
-        struct coordinates coordBR;
-        struct coordinates coordBL;
-        int pulse0, pulse1, pulse2, pulse3, pulse4, pulse5, pulse6, pulse7, pulse8, pulse9, pulse10, pulse11;
-
-        Run(coordinates coordFR, coordinates coordFL, coordinates coordBR, coordinates coordBL){
-
-        };
+        }
 
         // put your main code here, to run repeatedly
         void LoopWalk()
@@ -50,26 +37,26 @@ namespace DogDrone::Walk
                     Serial.println("\t");
 
                     step_coord = _step(i, 'u'); // BR
-                    coordBR.x4 = coord0.x4 + step_coord.x4;
-                    coordBR.y4 = coord0.y4 + lateralGain * i;
-                    coordBR.z4 = coord0.z4 + step_coord.z4;
+                    coordBR_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordBR_.y4 = coord0_.y4 + lateralGain * i;
+                    coordBR_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _step(i + 2, 'd'); // FR
-                    coordFR.x4 = coord0.x4 + step_coord.x4;
-                    coordFR.y4 = coord0.y4 + lateralGain * i;
-                    coordFR.z4 = coord0.z4 + step_coord.z4;
+                    step_coord_ = _step(i + 2, 'd'); // FR
+                    coordFR_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordFR_.y4 = coord0_.y4 + lateralGain * i;
+                    coordFR_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _step(i + 1, 'd'); // BL
-                    coordBL.x4 = coord0.x4 + step_coord.x4;
-                    coordBL.y4 = coord0.y4 - lateralGain * i;
-                    coordBL.z4 = coord0.z4 + step_coord.z4;
+                    step_coord_ = _step(i + 1, 'd'); // BL
+                    coordBL_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordBL_.y4 = coord0_.y4 - lateralGain * i;
+                    coordBL_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _step(i, 'd'); // FL
-                    coordFL.x4 = coord0.x4 + step_coord.x4;
-                    coordFL.y4 = coord0.y4 - lateralGain * i;
-                    coordFL.z4 = coord0.z4 + step_coord.z4;
+                    step_coord_ = _step(i, 'd'); // FL
+                    coordFL_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordFL_.y4 = coord0_.y4 - lateralGain * i;
+                    coordFL_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    // moveServos(coordFR, coordFL, coordBR, coordBL);
+                    moveServos(coordFR, coordFL, coordBR, coordBL);
                 }
             }
             for (double i = 0; i <= 0.99; i = i + increment)
@@ -92,27 +79,27 @@ namespace DogDrone::Walk
                     Serial.print(i);
                     Serial.println("\t");
 
-                    step_coord = _step(i, 'd'); // BR
-                    coordBR.x4 = coord0.x4 + step_coord.x4;
-                    coordBR.y4 = coord0.y4 + lateralGain * (1 - i);
-                    coordBR.z4 = coord0.z4 + step_coord.z4;
+                    step_coord = _ _step(i, 'd'); // BR
+                    coordBR_.x4 = coord0_.x4 + step_coord.x4_;
+                    coordBR_.y4 = coord0_.y4 + lateralGain * (1 - i);
+                    coordBR_.z4 = coord0_.z4 + step_coord.z4_;
 
-                    step_coord = _step(i, 'u'); // FR
-                    coordFR.x4 = coord0.x4 + step_coord.x4;
-                    coordFR.y4 = coord0.y4 + lateralGain * (1 - i);
-                    coordFR.z4 = coord0.z4 + step_coord.z4;
+                    step_coord = _ _step(i, 'u'); // FR
+                    coordFR_.x4 = coord0_.x4 + step_coord.x4_;
+                    coordFR_.y4 = coord0_.y4 + lateralGain * (1 - i);
+                    coordFR_.z4 = coord0_.z4 + step_coord.z4_;
 
-                    step_coord = _step(i + 2, 'd'); // BL
-                    coordBL.x4 = coord0.x4 + step_coord.x4;
-                    coordBL.y4 = coord0.y4 - lateralGain * (1 - i);
-                    coordBL.z4 = coord0.z4 + step_coord.z4;
+                    step_coord = _ _step(i + 2, 'd'); // BL
+                    coordBL_.x4 = coord0_.x4 + step_coord.x4_;
+                    coordBL_.y4 = coord0_.y4 - lateralGain * (1 - i);
+                    coordBL_.z4 = coord0_.z4 + step_coord.z4_;
 
-                    step_coord = _step(i + 1, 'd'); // FL
-                    coordFL.x4 = coord0.x4 + step_coord.x4;
-                    coordFL.y4 = coord0.y4 - lateralGain * (1 - i);
-                    coordFL.z4 = coord0.z4 + step_coord.z4;
+                    step_coord = _ _step(i + 1, 'd'); // FL
+                    coordFL_.x4 = coord0_.x4 + step_coord.x4_;
+                    coordFL_.y4 = coord0_.y4 - lateralGain * (1 - i);
+                    coordFL_.z4 = coord0_.z4 + step_coord.z4_;
 
-                    // moveServos(coordFR, coordFL, coordBR, coordBL);
+                    moveServos(coordFR, coordFL, coordBR, coordBL);
                 }
             }
             for (double i = 0; i <= 0.99; i = i + increment)
@@ -136,26 +123,26 @@ namespace DogDrone::Walk
                     Serial.println("\t");
 
                     step_coord = _step(i + 1, 'd'); // BR
-                    coordBR.x4 = coord0.x4 + step_coord.x4;
-                    coordBR.y4 = coord0.y4 - lateralGain * i;
-                    coordBR.z4 = coord0.z4 + step_coord.z4;
+                    coordBR_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordBR_.y4 = coord0_.y4 - lateralGain * i;
+                    coordBR_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _step(i, 'd'); // FR
-                    coordFR.x4 = coord0.x4 + step_coord.x4;
-                    coordFR.y4 = coord0.y4 - lateralGain * i;
-                    coordFR.z4 = coord0.z4 + step_coord.z4;
+                    step_coord_ = _step(i, 'd'); // FR
+                    coordFR_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordFR_.y4 = coord0_.y4 - lateralGain * i;
+                    coordFR_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _step(i, 'u'); // BL
-                    coordBL.x4 = coord0.x4 + step_coord.x4;
-                    coordBL.y4 = coord0.y4 + lateralGain * i;
-                    coordBL.z4 = coord0.z4 + step_coord.z4;
+                    step_coord_ = _step(i, 'u'); // BL
+                    coordBL_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordBL_.y4 = coord0_.y4 + lateralGain * i;
+                    coordBL_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _step(i + 2, 'd'); // FL
-                    coordFL.x4 = coord0.x4 + step_coord.x4;
-                    coordFL.y4 = coord0.y4 + lateralGain * i;
-                    coordFL.z4 = coord0.z4 + step_coord.z4;
+                    step_coord_ = _step(i + 2, 'd'); // FL
+                    coordFL_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordFL_.y4 = coord0_.y4 + lateralGain * i;
+                    coordFL_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    // moveServos(coordFR, coordFL, coordBR, coordBL);
+                    moveServos(coordFR, coordFL, coordBR, coordBL);
                 }
             }
             for (double i = 0; i <= 0.99; i = i + increment)
@@ -179,26 +166,26 @@ namespace DogDrone::Walk
                     Serial.println("\t");
 
                     step_coord = _step(i + 2, 'd'); // BR
-                    coordBR.x4 = coord0.x4 + step_coord.x4;
-                    coordBR.y4 = coord0.y4 - lateralGain * (1 - i);
-                    coordBR.z4 = coord0.z4 + step_coord.z4;
+                    coordBR_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordBR_.y4 = coord0_.y4 - lateralGain * (1 - i);
+                    coordBR_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _step(i + 1, 'd'); // FR
-                    coordFR.x4 = coord0.x4 + step_coord.x4;
-                    coordFR.y4 = coord0.y4 - lateralGain * (1 - i);
-                    coordFR.z4 = coord0.z4 + step_coord.z4;
+                    step_coord_ = _step(i + 1, 'd'); // FR
+                    coordFR_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordFR_.y4 = coord0_.y4 - lateralGain * (1 - i);
+                    coordFR_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _step(i, 'd'); // BL
-                    coordBL.x4 = coord0.x4 + step_coord.x4;
-                    coordBL.y4 = coord0.y4 + lateralGain * (1 - i);
-                    coordBL.z4 = coord0.z4 + step_coord.z4;
+                    step_coord_ = _step(i, 'd'); // BL
+                    coordBL_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordBL_.y4 = coord0_.y4 + lateralGain * (1 - i);
+                    coordBL_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _step(i, 'u'); // FL
-                    coordFL.x4 = coord0.x4 + step_coord.x4;
-                    coordFL.y4 = coord0.y4 + lateralGain * (1 - i);
-                    coordFL.z4 = coord0.z4 + step_coord.z4;
+                    step_coord_ = _step(i, 'u'); // FL
+                    coordFL_.x4 = coord0_.x4 + step_coord_.x4;
+                    coordFL_.y4 = coord0_.y4 + lateralGain * (1 - i);
+                    coordFL_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    // moveServos(coordFR, coordFL, coordBR, coordBL);
+                    moveServos(coordFR, coordFL, coordBR, coordBL);
                 }
             }
         }
@@ -208,7 +195,7 @@ namespace DogDrone::Walk
             double x, y;
             float x0, x1, x2, x3, y0, y1, y2, y3;
             float L;
-            struct coordinates coord;
+            coordinates coord;
 
             L = 80;
             if (sig == 'u')
@@ -255,5 +242,13 @@ namespace DogDrone::Walk
         unsigned long loopTime;
         unsigned long previousLooptime;
         double t;
+
+        coordinates coord0_;
+        coordinates step_coord_;
+        coordinates coordFR_;
+        coordinates coordFL_;
+        coordinates coordBR_;
+        coordinates coordBL_;
+        int pulse0, pulse1, pulse2, pulse3, pulse4, pulse5, pulse6, pulse7, pulse8, pulse9, pulse10, pulse11;
     };
 } // namespace

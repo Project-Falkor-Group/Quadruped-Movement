@@ -9,19 +9,31 @@ namespace DogDrone::Walk
         char mode = 'W';
     };
 
-    // struct motor_arguments
-    // {
-    //     // int pin;
-    //     int pulse;
-    // };
+    struct motor_arguments
+    {
+        int pin;
+        int pulse;
+    };
+    
+    struct angles
+    {
+        double theta;
+        double alpha;
+        double gamma;
+    }; ////vector
 
-    typedef int motor_pulse;
+    struct coordinates
+    {
+        double x4;
+        double y4;
+        double z4;
+    };
 
     struct leg_arguments
     {
-        motor_pulse hip{0};
-        motor_pulse knee{0};
-        motor_pulse ankle{0};
+        motor_arguments hip{0, 0};
+        motor_arguments knee{0. 0};
+        motor_arguments ankle{0, 0};
     };
 
     struct quadruped_router_arguments
