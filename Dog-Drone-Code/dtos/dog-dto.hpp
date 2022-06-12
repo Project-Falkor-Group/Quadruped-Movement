@@ -11,22 +11,36 @@ namespace DogDrone::Walk
 
     struct motor_arguments
     {
-        int motor_speed;
-        int motor_angle;
+        int pin;
+        int pulse;
+    };
+    
+    struct angles
+    {
+        double theta;
+        double alpha;
+        double gamma;
+    }; ////vector
+
+    struct coordinates
+    {
+        double x4;
+        double y4;
+        double z4;
     };
 
     struct leg_arguments
     {
-        motor_arguments hip{motor_arguments{0, 0}};
-        motor_arguments knee{motor_arguments{0, 0}};
-        motor_arguments ankle{motor_arguments{0, 0}};
+        motor_arguments hip{0, 0};
+        motor_arguments knee{0, 0};
+        motor_arguments ankle{0, 0};
     };
 
     struct quadruped_router_arguments
     {
-        leg_arguments left_front{leg_arguments{}};
-        leg_arguments left_rear{leg_arguments{}};
-        leg_arguments right_front{leg_arguments{}};
-        leg_arguments right_rear{leg_arguments{}};
+        leg_arguments front_right{leg_arguments{}};
+        leg_arguments front_left{leg_arguments{}};
+        leg_arguments back_right{leg_arguments{}};
+        leg_arguments back_left{leg_arguments{}};
     };
 }
