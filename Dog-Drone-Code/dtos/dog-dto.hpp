@@ -32,7 +32,7 @@ namespace DogDrone::Walk
     struct leg_arguments
     {
         motor_arguments hip{0, 0};
-        motor_arguments knee{0. 0};
+        motor_arguments knee{0, 0};
         motor_arguments ankle{0, 0};
     };
 
