@@ -1,22 +1,27 @@
 #include <Arduino.h>
-#include "../run.hpp"
+#include "../include/ground/run.hpp"
+#include "../include/ground/router.hpp"
+
+using namespace DogDrone::Walk;
+Run run;
+Router router;
 
 void setup()
 {
   Serial.begin(9600);
-  connectServos();
+  router.connectServos();
   // initialize the servos to their starting positions
-  coord0.x4 = -170;
-  coord0.y4 = 30;
-  coord0.z4 = -60;
+  coordinates coord0.x4 = -170;
+  coordinates coord0.y4 = 30;
+  coordinates coord0.z4 = -60;
 
-  coordFR = coord0;
-  coordFL = coord0;
-  coordBR = coord0;
-  coordBL = coord0;
+  coordinates coordFR = coord0;
+  coordinates coordFL = coord0;
+  coordinates coordBR = coord0;
+  coordinates coordBL = coord0;
 }
 
 void loop()
 {
-  Run(coordFR, coordFL, coordBR, coordBL);
+  run.Run(coordFR, coordFL, coordBR, coordBL);
 }

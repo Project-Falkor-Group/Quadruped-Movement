@@ -1,7 +1,7 @@
 #pragma once
 #include "../../dtos/dog-dto.hpp"
 #include "inverse-kin.hpp"
-// include <Servo.h>
+#include <Servo.h>
 
 #include "leg.hpp"
 

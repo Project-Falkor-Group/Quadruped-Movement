@@ -1,7 +1,8 @@
 #pragma once
 #include "../dtos/dog-dto.hpp"
+#include <Arduino.h>
 #include <math.h>
-#include <cmath>
+//#include <cmath>
 
 namespace DogDrone::Walk
 {
