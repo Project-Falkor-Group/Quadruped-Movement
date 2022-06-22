@@ -1,17 +1,14 @@
 #pragma once
 #include "router.hpp"
 #include <Arduino.h>
-//#include <Arduino>
+#include "../dtos/dog-dto.hpp"
 
 namespace DogDrone::Walk
 {
-
     class Run
     {
 
-        Run(coordinates coordFR, coordinates coordFL, coordinates coordBR, coordinates coordBL) : coordFR_(coordFR), coordFL_(coordFL), coordBR_(coordBR), coordBL_(coordBL)
-        {
-        }
+        Run(coordinates coordFR, coordinates coordFL, coordinates coordBR, coordinates coordBL) : coordFR_(coordFR), coordFL_(coordFL), coordBR_(coordBR), coordBL_(coordBL) {}
 
         // put your main code here, to run repeatedly
         void LoopWalk()
@@ -36,7 +33,7 @@ namespace DogDrone::Walk
                     Serial.print(i);
                     Serial.println("\t");
 
-                    step_coord = _step(i, 'u'); // BR
+                    step_coord_ = _step(i, 'u'); // BR
                     coordBR_.x4 = coord0_.x4 + step_coord_.x4;
                     coordBR_.y4 = coord0_.y4 + lateralGain * i;
                     coordBR_.z4 = coord0_.z4 + step_coord_.z4;
@@ -56,7 +53,7 @@ namespace DogDrone::Walk
                     coordFL_.y4 = coord0_.y4 - lateralGain * i;
                     coordFL_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    moveServos(coordFR, coordFL, coordBR, coordBL);
+                    router.moveServos(coordFR_, coordFL_, coordBR_, coordBL_);
                 }
             }
             for (double i = 0; i <= 0.99; i = i + increment)
@@ -79,27 +76,27 @@ namespace DogDrone::Walk
                     Serial.print(i);
                     Serial.println("\t");
 
-                    step_coord = _ _step(i, 'd'); // BR
-                    coordBR_.x4 = coord0_.x4 + step_coord.x4_;
+                    step_coord_ = _step(i, 'd'); // BR
+                    coordBR_.x4 = coord0_.x4 + step_coord_.x4;
                     coordBR_.y4 = coord0_.y4 + lateralGain * (1 - i);
-                    coordBR_.z4 = coord0_.z4 + step_coord.z4_;
+                    coordBR_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _ _step(i, 'u'); // FR
-                    coordFR_.x4 = coord0_.x4 + step_coord.x4_;
+                    step_coord_ = _step(i, 'u'); // FR
+                    coordFR_.x4 = coord0_.x4 + step_coord_.x4;
                     coordFR_.y4 = coord0_.y4 + lateralGain * (1 - i);
-                    coordFR_.z4 = coord0_.z4 + step_coord.z4_;
+                    coordFR_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _ _step(i + 2, 'd'); // BL
-                    coordBL_.x4 = coord0_.x4 + step_coord.x4_;
+                    step_coord_ = _step(i + 2, 'd'); // BL
+                    coordBL_.x4 = coord0_.x4 + step_coord_.x4;
                     coordBL_.y4 = coord0_.y4 - lateralGain * (1 - i);
-                    coordBL_.z4 = coord0_.z4 + step_coord.z4_;
+                    coordBL_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    step_coord = _ _step(i + 1, 'd'); // FL
-                    coordFL_.x4 = coord0_.x4 + step_coord.x4_;
+                    step_coord_ = _step(i + 1, 'd'); // FL
+                    coordFL_.x4 = coord0_.x4 + step_coord_.x4;
                     coordFL_.y4 = coord0_.y4 - lateralGain * (1 - i);
-                    coordFL_.z4 = coord0_.z4 + step_coord.z4_;
+                    coordFL_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    moveServos(coordFR, coordFL, coordBR, coordBL);
+                    router.moveServos(coordFR_, coordFL_, coordBR_, coordBL_);
                 }
             }
             for (double i = 0; i <= 0.99; i = i + increment)
@@ -122,7 +119,7 @@ namespace DogDrone::Walk
                     Serial.print(i);
                     Serial.println("\t");
 
-                    step_coord = _step(i + 1, 'd'); // BR
+                    step_coord_ = _step(i + 1, 'd'); // BR
                     coordBR_.x4 = coord0_.x4 + step_coord_.x4;
                     coordBR_.y4 = coord0_.y4 - lateralGain * i;
                     coordBR_.z4 = coord0_.z4 + step_coord_.z4;
@@ -142,7 +139,7 @@ namespace DogDrone::Walk
                     coordFL_.y4 = coord0_.y4 + lateralGain * i;
                     coordFL_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    moveServos(coordFR, coordFL, coordBR, coordBL);
+                    router.moveServos(coordFR_, coordFL_, coordBR_, coordBL_);
                 }
             }
             for (double i = 0; i <= 0.99; i = i + increment)
@@ -165,7 +162,7 @@ namespace DogDrone::Walk
                     Serial.print(i);
                     Serial.println("\t");
 
-                    step_coord = _step(i + 2, 'd'); // BR
+                    step_coord_ = _step(i + 2, 'd'); // BR
                     coordBR_.x4 = coord0_.x4 + step_coord_.x4;
                     coordBR_.y4 = coord0_.y4 - lateralGain * (1 - i);
                     coordBR_.z4 = coord0_.z4 + step_coord_.z4;
@@ -185,7 +182,7 @@ namespace DogDrone::Walk
                     coordFL_.y4 = coord0_.y4 + lateralGain * (1 - i);
                     coordFL_.z4 = coord0_.z4 + step_coord_.z4;
 
-                    moveServos(coordFR, coordFL, coordBR, coordBL);
+                    router.moveServos(coordFR_, coordFL_, coordBR_, coordBL_);
                 }
             }
         }
@@ -230,6 +227,11 @@ namespace DogDrone::Walk
             }
         }
 
+        void Connect()
+        {
+            router.connectServos();
+        }
+
     private:
         char a;
         int pulse;
@@ -243,6 +245,27 @@ namespace DogDrone::Walk
         unsigned long previousLooptime;
         double t;
 
+        motor_arguments frHip;
+        motor_arguments frKnee;
+        motor_arguments frAnkle;
+
+        motor_arguments flHip;
+        motor_arguments flKnee;
+        motor_arguments flAnkle;
+
+        motor_arguments brHip;
+        motor_arguments brKnee;
+        motor_arguments brAnkle;
+
+        motor_arguments blHip;
+        motor_arguments blKnee;
+        motor_arguments blAnkle;
+
+        leg_arguments front_right;
+        leg_arguments front_left;
+        leg_arguments back_right;
+        leg_arguments back_left;
+        Router router(front_right, front_left, back_right, back_left);
         coordinates coord0_;
         coordinates step_coord_;
         coordinates coordFR_;

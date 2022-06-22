@@ -21,7 +21,6 @@ namespace DogDrone::Walk
         quadruped_router_arguments set_quadruped_router_arguments()
         {
             quadruped_router_arguments Quadruped;
-
             
             front_right = front_right;
             front_left = front_left;
