@@ -15,13 +15,13 @@ namespace DogDrone::Walk
             angles ang;
             double D;
 
-            D = ((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2 + (z4) ^ 2 - (L2) ^ 2 - (L3) ^ 2) / (2 * L2 * L3);
+            D = (square(x4) + square(-y4) - square(L1) + square(z4) - square(L2) - square(L3)) / (2 * L2 * L3);
             //  if (D >= 1){D=1;}
             //  else if (D <= 0){D=0;}
             /////////////////////////////////////////////DOMINIO
-            ang.theta = -atan2(y4, x4) - atan2(sqrt((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2), -L1);
-            ang.gamma = atan2(sqrt(1 - (D) ^ 2), D);
-            ang.alpha = atan2(z4, sqrt((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2)) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
+            ang.theta = -atan2(y4, x4) - atan2(sqrt(square(x4) + square(-y4) - square(L1)), -L1);
+            ang.gamma = atan2(sqrt(1 - square(D)), D);
+            ang.alpha = atan2(z4, sqrt(square(x4) + square(-y4) - square(L1))) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
             ang.theta = ang.theta * 360 / (2 * PI) + 270;
             ang.alpha = -ang.alpha * 360 / (2 * PI);
             ang.gamma = ang.gamma * 360 / (2 * PI) - 90;
@@ -40,13 +40,13 @@ namespace DogDrone::Walk
             angles ang;
             double D;
 
-            D = ((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2 + (z4) ^ 2 - (L2) ^ 2 - (L3) ^ 2) / (2 * L2 * L3);
+            D = (square(x4) + square(-y4) - square(L1) + square(z4) - square(L2) - square(L3)) / (2 * L2 * L3);
             //  if (D >= 1){D=1;}
             //  else if (D <= 0){D=0;}
             /////////////////////////////////////////////DOMINIO
-            ang.theta = -atan2(y4, x4) - atan2(sqrt((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2), -L1);
-            ang.gamma = atan2(sqrt(1 - (D) ^ 2), D);
-            ang.alpha = atan2(z4, sqrt((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2)) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
+            ang.theta = -atan2(y4, x4) - atan2(sqrt(square(x4) + square(-y4) - square(L1)), -L1);
+            ang.gamma = atan2(sqrt(1 - square(D)), D);
+            ang.alpha = atan2(z4, sqrt(square(x4) + square(-y4) - square(L1))) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
             ang.theta = ang.theta * 360 / (2 * PI) + 270;
             ang.alpha = -ang.alpha * 360 / (2 * PI);
             ang.gamma = ang.gamma * 360 / (2 * PI) - 90;
@@ -65,13 +65,13 @@ namespace DogDrone::Walk
             angles ang;
             double D;
 
-            D = ((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2 + (z4) ^ 2 - (L2) ^ 2 - (L3) ^ 2) / (2 * L2 * L3);
+            D = (square(x4) + square(-y4) - square(L1) + square(z4) - square(L2) - square(L3)) / (2 * L2 * L3);
             //  if (D >= 1){D=1;}
             //  else if (D <= 0){D=0;}
             /////////////////////////////////////////////DOMINIO
-            ang.theta = -atan2(y4, x4) - atan2(sqrt((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2), -L1);
-            ang.gamma = atan2(sqrt(1 - (D) ^ 2), D);
-            ang.alpha = atan2(z4, sqrt((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2)) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
+            ang.theta = -atan2(y4, x4) - atan2(sqrt(square(x4) + square(-y4) - square(L1)), -L1);
+            ang.gamma = atan2(sqrt(1 - square(D)), D);
+            ang.alpha = atan2(z4, sqrt(square(x4) + square(-y4) - square(L1))) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
             ang.theta = ang.theta * 360 / (2 * PI) + 270;
             ang.alpha = -ang.alpha * 360 / (2 * PI);
             ang.gamma = ang.gamma * 360 / (2 * PI) - 90;
@@ -91,13 +91,13 @@ namespace DogDrone::Walk
             angles ang;
             double D;
 
-            D = ((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2 + (z4) ^ 2 - (L2) ^ 2 - (L3) ^ 2) / (2 * L2 * L3);
+            D = (square(x4) + square(-y4) - square(L1) + square(z4) - square(L2) - square(L3)) / (2 * L2 * L3);
             //  if (D >= 1){D=1;}
             //  else if (D <= 0){D=0;}
             /////////////////////////////////////////////DOMINIO
-            ang.theta = -atan2(y4, x4) - atan2(sqrt((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2), -L1);
-            ang.gamma = atan2(sqrt(1 - (D) ^ 2), D);
-            ang.alpha = atan2(z4, sqrt((x4) ^ 2 + (-y4) ^ 2 - (L1) ^ 2)) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
+            ang.theta = -atan2(y4, x4) - atan2(sqrt(square(x4) + square(-y4) - square(L1)), -L1);
+            ang.gamma = atan2(sqrt(1 - square(D)), D);
+            ang.alpha = atan2(z4, sqrt(square(x4) + square(-y4) - square(L1))) - atan2(L3 * sin(ang.gamma), L2 + L3 * cos(ang.gamma));
             ang.theta = ang.theta * 360 / (2 * PI) + 270;
             ang.alpha = -ang.alpha * 360 / (2 * PI);
             ang.gamma = ang.gamma * 360 / (2 * PI) - 90;

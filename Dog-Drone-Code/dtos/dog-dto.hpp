@@ -14,7 +14,7 @@ namespace DogDrone::Walk
         int pin;
         int pulse;
     };
-    
+
     struct angles
     {
         double theta;
@@ -43,4 +43,23 @@ namespace DogDrone::Walk
         leg_arguments back_right{leg_arguments{}};
         leg_arguments back_left{leg_arguments{}};
     };
+
+    struct angles
+    {
+        double theta;
+        double alpha;
+        double gamma;
+    }; ////vector
+    struct coordinates
+    {
+        double x4;
+        double y4;
+        double z4;
+    };
+    struct coordinates coord0;
+    struct coordinates step_coord;
+    struct coordinates coordFR;
+    struct coordinates coordFL;
+    struct coordinates coordBR;
+    struct coordinates coordBL;
 }

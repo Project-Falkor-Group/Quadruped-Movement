@@ -10,12 +10,9 @@ namespace DogDrone::Walk
     class Router
     {
     public:
-        Router(leg_arguments &front_right_, leg_arguments &front_left_, leg_arguments &back_right_, leg_arguments &back_left_)
+        Router()
         {
-            front_right = front_right_;
-            front_left = front_left_;
-            back_right = back_right_;
-            back_left = back_left_;
+
         };
 
         quadruped_router_arguments set_quadruped_router_arguments()

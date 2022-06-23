@@ -8,10 +8,13 @@ namespace DogDrone::Walk
     class Run
     {
 
-        Run(coordinates coordFR, coordinates coordFL, coordinates coordBR, coordinates coordBL) : coordFR_(coordFR), coordFL_(coordFL), coordBR_(coordBR), coordBL_(coordBL) {}
+    public:
+        Run(){
+
+        };
 
         // put your main code here, to run repeatedly
-        void LoopWalk()
+        void LoopWalk(coordinates coordFR_, coordinates coordFL_, coordinates coordBR_, coordinates coordBL_)
         {
             for (double i = 0; i <= 0.99; i = i + increment)
             { // BR leg up
@@ -189,7 +192,6 @@ namespace DogDrone::Walk
 
         struct coordinates _step(double t, char sig)
         {
-            double x, y;
             float x0, x1, x2, x3, y0, y1, y2, y3;
             float L;
             coordinates coord;
@@ -227,11 +229,6 @@ namespace DogDrone::Walk
             }
         }
 
-        void Connect()
-        {
-            router.connectServos();
-        }
-
     private:
         char a;
         int pulse;
@@ -245,33 +242,13 @@ namespace DogDrone::Walk
         unsigned long previousLooptime;
         double t;
 
-        motor_arguments frHip;
-        motor_arguments frKnee;
-        motor_arguments frAnkle;
-
-        motor_arguments flHip;
-        motor_arguments flKnee;
-        motor_arguments flAnkle;
-
-        motor_arguments brHip;
-        motor_arguments brKnee;
-        motor_arguments brAnkle;
-
-        motor_arguments blHip;
-        motor_arguments blKnee;
-        motor_arguments blAnkle;
-
         leg_arguments front_right;
         leg_arguments front_left;
         leg_arguments back_right;
         leg_arguments back_left;
-        Router router(front_right, front_left, back_right, back_left);
+        Router router;
         coordinates coord0_;
         coordinates step_coord_;
-        coordinates coordFR_;
-        coordinates coordFL_;
-        coordinates coordBR_;
-        coordinates coordBL_;
         int pulse0, pulse1, pulse2, pulse3, pulse4, pulse5, pulse6, pulse7, pulse8, pulse9, pulse10, pulse11;
     };
 } // namespace
